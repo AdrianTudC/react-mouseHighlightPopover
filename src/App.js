@@ -8,12 +8,12 @@ class App extends Component {
         this.handleMouseUp = this.handleMouseUp.bind(this);
     }
 
+    // expand selection left and right in order to cover the first and last words entirely
     expandSelection(range, maxLength) {
         if (range.collapsed) {
             return;
         }
-        console.log(range);
-        console.log(maxLength);
+
         while (range.toString()[0].match(/\w/) && range.startOffset > 0) {
             range.setStart(range.startContainer, range.startOffset - 1);
         }
@@ -34,7 +34,6 @@ class App extends Component {
 
     handleMouseUp(e) {
         let selectionObject = window.getSelection();
-        let text = e.currentTarget.textContent;
         let selectionRange = selectionObject.getRangeAt(0);
         this.expandSelection(selectionRange, e.currentTarget.textContent.length);
         if (selectionObject.focusNode.textContent === e.currentTarget.textContent) {
@@ -46,7 +45,6 @@ class App extends Component {
     render() {
         return (
             <div className="App">
-                {/*The element that is ref-ed MUST NOT be a functional component.*/}
                 <p
                     onMouseUp={e => this.handleMouseUp(e)}>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
